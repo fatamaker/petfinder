@@ -3,6 +3,7 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+
 android {
     namespace 'com.example.petfinder'
     compileSdk 35
@@ -28,6 +29,7 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 }
+
 
 dependencies {
 
