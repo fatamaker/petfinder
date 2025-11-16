@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Élément 1: Ombre (Optionnel mais ajoute de la profondeur) -->
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Simule une ombre en bordure -->
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+            <solid android:color="#0D000000" /> <!-- Très léger gris transparent pour l'ombre -->
+            <!-- Rayon des coins supérieurs -->
+            <corners android:topLeftRadius="24dp" android:topRightRadius="24dp" />
+        </shape>
+    </item>
+
+    <!-- Élément 2: Le fond blanc principal -->
+    <item android:bottom="2dp"> <!-- Remonte légèrement le contenu pour cacher les coins inférieurs de l'ombre -->
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+            <!-- Rayon des coins supérieurs pour la barre -->
+            <corners android:topLeftRadius="24dp" android:topRightRadius="24dp" />
+        </shape>
+    </item>
+</layer-list>

@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 if (currentUser != null) {
                     // Utilisateur est connecté -> Aller à MainActivity
-                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                    Intent mainIntent = new Intent(SplashActivity.this, DiscoverActivity.class);
                     startActivity(mainIntent);
                 } else {
                     // Utilisateur n'est pas connecté -> Aller à LoginActivity
