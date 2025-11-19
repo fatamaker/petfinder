@@ -25,4 +25,6 @@
     </string>
     <string name="back_button_desc">Navigate back to the previous screen</string>
     <string name="forgot_password_desc">Select which contact method we should use to reset your password.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

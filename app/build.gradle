@@ -37,6 +37,7 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.play.services.maps
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -52,6 +53,14 @@ dependencies {
     // 3. Firestore (pour sauvegarder les infos utilisateur : nom, tél, etc.)
     implementation 'com.google.firebase:firebase-firestore'
 
+    implementation 'com.google.firebase:firebase-database'
+
     // 4. Dépendance pour Google Sign-In (nécessaire pour le bouton Google)
     implementation 'com.google.android.gms:play-services-auth:21.2.0'
+
+    // Location services
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // Add this at the bottom of the file
+    apply plugin: 'com.google.gms.google-services'
 }

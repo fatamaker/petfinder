@@ -24,6 +24,7 @@
         <!-- ITEM 1: Home (Discover) -->
         <LinearLayout
             android:layout_width="0dp"
+            android:id="@+id/nav_home"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -45,6 +46,7 @@
         <!-- ITEM 2: Map -->
         <LinearLayout
             android:layout_width="0dp"
+            android:id="@+id/nav_map"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -72,6 +74,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
+            android:id="@+id/nav_add"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -92,6 +95,7 @@
         <!-- ITEM 4: Profile -->
         <LinearLayout
             android:layout_width="0dp"
+            android:id="@+id/nav_profile"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"

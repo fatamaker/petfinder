@@ -16,12 +16,22 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.example.petfinder.Fragment.AddFragment;
+import com.example.petfinder.Fragment.DiscoverFragment;
+import com.example.petfinder.Fragment.MapFragment;
+import com.example.petfinder.Fragment.ProfileFragment;
 import com.example.petfinder.R;
 import com.example.petfinder.adapters.CategoryAdapter;
 import com.example.petfinder.adapters.AnnouncementAdapter;
@@ -33,79 +43,52 @@ import java.util.List;
 
 public class DiscoverActivity extends AppCompatActivity {
 
-    private RecyclerView categoriesRecyclerView;
-    private RecyclerView announcementsRecyclerView;
-
-    // Assurez-vous d'implémenter vos adaptateurs et modèles
-    // Ex: CategoryAdapter, AnnouncementAdapter, Category.java, Announcement.java
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
-        categoriesRecyclerView = findViewById(R.id.categoriesRecyclerView);
-        announcementsRecyclerView = findViewById(R.id.announcementsRecyclerView);
+        // 1. Initialiser le fragment par défaut (Home/Discover)
+        if (savedInstanceState == null) {
+            // Assurez-vous d'avoir un DiscoverFragment ou HomeFragment
+            replaceFragment(new DiscoverFragment());
+        }
 
-        // 1. Initialiser le RecyclerView des Catégories (Horizontal)
-        setupCategoriesRecyclerView();
+        // 2. Récupérer le conteneur inclus de la barre de navigation
+        View bottomNavInclude = findViewById(R.id.bottom_navigation_include);
 
-        // 2. Initialiser le RecyclerView des Annonces (Vertical)
-        setupAnnouncementsRecyclerView();
+        // 3. Trouver les vues par ID à l'intérieur du conteneur inclus
+        LinearLayout navHome = bottomNavInclude.findViewById(R.id.nav_home);
+        LinearLayout navMap = bottomNavInclude.findViewById(R.id.nav_map);
+        LinearLayout navAdd = bottomNavInclude.findViewById(R.id.nav_add);
+        LinearLayout navProfile = bottomNavInclude.findViewById(R.id.nav_profile);
 
-        // Gérer les clics sur les onglets Found/Lost (Exemple)
-        findViewById(R.id.foundText).setOnClickListener(v -> loadAnnouncements("found"));
-        findViewById(R.id.lostText).setOnClickListener(v -> loadAnnouncements("lost"));
-    }
-
-    private void setupCategoriesRecyclerView() {
-        // Définir le LayoutManager pour une liste horizontale
-        categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        // Simuler les données des catégories
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category("Dog", R.drawable.ic_dog_category));
-        categories.add(new Category("Cat", R.drawable.ic_cat_category));
-        categories.add(new Category("Bird", R.drawable.ic_bird_category));
-        categories.add(new Category("Other", R.drawable.ic_other_category));
-        // ... ajoutez d'autres catégories
-
-        // Attacher l'adaptateur
-        CategoryAdapter adapter = new CategoryAdapter(this, categories);
-        categoriesRecyclerView.setAdapter(adapter);
-    }
-
-    private void setupAnnouncementsRecyclerView() {
-        // Définir le LayoutManager pour une liste verticale
-        announcementsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        // Charger les annonces par défaut (Found)
-        loadAnnouncements("found");
+        // 4. Définir les écouteurs de clic
+        navHome.setOnClickListener(v -> replaceFragment(new DiscoverFragment()));
+        navMap.setOnClickListener(v -> replaceFragment(new MapFragment()));
+        navAdd.setOnClickListener(v -> replaceFragment(new AddFragment()));
+       navProfile.setOnClickListener(v -> replaceFragment(new ProfileFragment()));
     }
 
     /**
-     * Charge et affiche la liste des annonces (simule une requête Firebase).
-     * @param status "found" ou "lost"
+     * Méthode générique pour remplacer le fragment actuel dans le conteneur.
+     * @param fragment Le nouveau fragment à afficher.
      */
-    private void loadAnnouncements(String status) {
-        // --- LOGIQUE DE RÉCUPÉRATION DE DONNÉES DE FIREBASE FIRESTORE ICI ---
+    private void replaceFragment(Fragment fragment) {
+        // Obtenir le FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        // Commencer une transaction
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        List<Announcement> announcements = new ArrayList<>();
+        // Remplacer l'ancien fragment par le nouveau dans le FrameLayout
+        transaction.replace(R.id.fragment_container, fragment);
 
-        if (status.equals("found")) {
-            announcements.add(new Announcement("Black Cat", "Found hiding under a car...", "May 26, 2024", "found", R.drawable.found));
-            announcements.add(new Announcement("Parrot", "Found in a park...", "May 27, 2024", "found", R.drawable.found));
-        } else {
-            announcements.add(new Announcement("Max (Dog)", "Lost near the school...", "May 25, 2024", "lost", R.drawable.found));
-            // ... autres annonces perdues
-        }
+        // Optionnel : Ajouter à la pile de retour pour la gestion du bouton 'Retour'
+        // transaction.addToBackStack(null);
 
-        // Mettre à jour l'adaptateur
-        AnnouncementAdapter adapter = new AnnouncementAdapter(this, announcements);
-        announcementsRecyclerView.setAdapter(adapter);
-
-        // Mettre à jour le style des onglets
-
+        // Valider la transaction
+        transaction.commit();
     }
 
 
